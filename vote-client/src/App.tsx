@@ -45,6 +45,11 @@ function PollPage() {
 
   return (
     <div>
+      <div style={{ marginTop: '20px' }}>
+        <Link to="/" style={{ textDecoration: 'none', color: 'black', fontSize: '18px' }}>
+          ← Back to Home
+        </Link>
+      </div>
       <h1>{poll.title}</h1>
       <div style={{ display: 'flex', gap: '1rem' }}>
         {uniqueOptions.map((option) => (
@@ -71,7 +76,7 @@ function App() {
           path="/"
           element={
             <div className='polls_list'>
-              <h1>Choose poll</h1>
+                <h1 style={{ textAlign: 'center' }}>Choose poll</h1>
               <table border={1} cellPadding={10} cellSpacing={0}>
                 <thead>
                   <tr>
