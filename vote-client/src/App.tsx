@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { api } from './api';
 import { cable } from './cable';
 import { Poll, Vote } from './types';
+import NewPollPage from './NewPollPage';
 import { BrowserRouter as Router, Routes, Route, Link, useParams } from 'react-router-dom';
 
 function PollPage() {
@@ -27,9 +28,12 @@ function PollPage() {
       }
     );
 
-    return () => subscription.unsubscribe();
+    return () => {
+      if (subscription) {
+        subscription.unsubscribe();
+      }
+    };
   }, [poll?.id]);
-
   const handleVote = (option: string) => {
     api.post('/votes', {
       vote: { poll_id: poll?.id, option },
@@ -75,7 +79,12 @@ function App() {
         <Route
           path="/"
           element={
-            <div className='polls_list'>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' , textAlign: 'center' }}>
+              <div style={{ marginTop: '50px' , textAlign: 'center' }}>
+                <Link to="/new_poll" style={{fontSize: '18px'}}>
+                  Create new poll
+                </Link>
+              </div>
                 <h1 style={{ textAlign: 'center' }}>Choose poll</h1>
               <table border={1} cellPadding={10} cellSpacing={0}>
                 <thead>
@@ -103,6 +112,7 @@ function App() {
           }
         />
         <Route path="/polls/:id" element={<PollPage />} />
+        <Route path='/new_poll' element={<NewPollPage />} />
       </Routes>
     </Router>
   );
