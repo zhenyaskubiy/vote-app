@@ -3,6 +3,7 @@ import { api } from './api';
 import { cable } from './cable';
 import { Poll, Vote } from './types';
 import NewPollPage from './NewPollPage';
+import EditPollPage from './EditPollPage';
 import { BrowserRouter as Router, Routes, Route, Link, useParams } from 'react-router-dom';
 
 function PollPage() {
@@ -50,12 +51,15 @@ function PollPage() {
   return (
     <div>
       <div style={{ marginTop: '20px' }}>
-        <Link to="/" style={{ textDecoration: 'none', color: 'black', fontSize: '18px' }}>
+        <Link to="/" style={{ textDecoration: 'none', fontSize: '18px' }}>
           ← Back to Home
+        </Link>
+        <Link to={`/polls/${poll.id}/edit`} style={{ paddingLeft: '550px', textDecoration: 'none', fontSize: '18px' }}>
+           Edit Poll
         </Link>
       </div>
       <h1>{poll.title}</h1>
-      <div style={{ display: 'flex', gap: '1rem' }}>
+      <div style={{ marginTop: '20px' }}>
         {uniqueOptions.map((option) => (
           <button key={option} onClick={() => handleVote(option)}>
             {option} ({getCount(option)})
@@ -113,6 +117,7 @@ function App() {
         />
         <Route path="/polls/:id" element={<PollPage />} />
         <Route path='/new_poll' element={<NewPollPage />} />
+        <Route path="/polls/:id/edit" element={<EditPollPage />} />
       </Routes>
     </Router>
   );
